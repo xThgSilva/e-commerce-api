@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ecommerce.db"
 
 db = SQLAlchemy(app)
 
@@ -12,7 +12,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=True)
 
-@app.route('/api/products/add', methods=['POST'])
+@app.route("/api/products/add", methods=["POST"])
 def add_product():
     data = request.json
     if 'name' in data and 'price' in data:
@@ -21,10 +21,21 @@ def add_product():
         db.session.add(product)
         db.session.commit()
         return jsonify({
-            "message": "Product added succesfully!"
+            "message": "Product added succesfully."
         })
     else:
         return jsonify({"message": "Invalid product data."}), 400
+
+@app.route("/api/products/delete/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+    product = Product.query.get(product_id)
+    if product:
+        db.session.delete(product)
+        db.session.commit()
+        
+        return jsonify({"message": "Product deleted succesfully."})
+    else:
+        return jsonify({"message": "Product not found to delete."}), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
