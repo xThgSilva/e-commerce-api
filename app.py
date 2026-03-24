@@ -138,7 +138,7 @@ def add_product_to_cart(product_id):
     product = Product.query.get(product_id)
 
     if user and product:
-        cart_item = CartItem(username=user.id, product_id=product.id)
+        cart_item = CartItem(user_id=user.id, product_id=product.id)
         db.session.add(cart_item)
         db.session.commit()
         return jsonify({"message": "Item added to the cart succesfully."})
