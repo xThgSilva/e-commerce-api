@@ -23,11 +23,11 @@ This API uses session-based authentication with Flask-Login. After login, a sess
 Generates a cookie for authentication.
 
 **Request**
-* **URL** `/login`
-* **Method** POST
-* **Header:**
+- **URL:** `/login`
+- **Method:** POST
+- **Header:**
     - Content-Type: application/json
-* **Body:**
+- **Body:**
 ```json
 {
     "username": "admin", // example
@@ -48,9 +48,9 @@ Generates a cookie for authentication.
 Ends the user session **(Requires Authentication)**
 
 **Request**
-* **URL** `/logout`
-* **Method** POST
-* **Header:**
+- **URL:** `/logout`
+- **Method:** POST
+- **Header:**
     - Content-Type: application/json
 
 **Response**
@@ -58,5 +58,152 @@ Ends the user session **(Requires Authentication)**
 ```json
 {
     "message": "Logout in succesfully."
+}
+```
+
+# Endpoints
+Below are all the endpoints. Some require authentication.
+
+## Product Endpoints
+## 1. POST `/api/products/add`
+Add a new product. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/products/add`
+- **Method:** POST
+- **Header:**
+    - Content-Type: application/json
+- **Body:**
+```json
+{
+    "name": "TV",
+    "price": 3999,
+    "description": "Smart TV 4K"
+}
+```
+
+**Response**
+- **Status Code:** 200 OK
+- **Body:**
+```json
+{
+    "message": "Product added succesfully."
+}
+```
+
+## 2. GET `/api/products`
+Returns all registered products. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/products`
+- **Method:** GET
+
+**Response**
+- **Status Code:** 200 OK
+- **Body:**
+```json
+{
+    [
+    {
+        "id": 1,
+        "name": "TV",
+        "price": 4000.0
+    },
+    {
+        "id": 2,
+        "name": "Notebook",
+        "price": 2500.0
+    }
+]
+}
+```
+
+## 3. GET `/api/products/{product_id}`
+Returns the data for a specific product. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/products//{product_id}`
+- **Method:** GET
+
+**Response**
+- **Status Code:** 200 OK
+- **Body: (using product_id = 1)**
+```json
+{
+    {
+        "id": 1,
+        "name": "TV",
+        "price": 4000.0
+    }
+}
+```
+
+## Possible Errors
+**Error - Product not Found**
+- **Status Code:** 404 Not Found
+- **Body:**
+```json
+{
+    "message": "Product not found."
+}
+```
+
+## 4. DELETE `/api/products/delete/{product_id}`
+Delete a product. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/products/delete/{product_id}`
+- **Method:** DELETE
+
+**Response**
+- **Status Code:** 200 OK
+- **Body: (using product_id = 2)**
+```json
+{
+    "message": "Product deleted succesfully."
+}
+```
+
+## Possible Errors
+**Error - Product not Found to delete**
+- **Status Code:** 404 Not Found
+- **Body:**
+```json
+{
+    "message": "Product not found to delete."
+}
+```
+
+## 5. PUT `/api/products/update/{product_id}`
+Update a product. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/products/update/{product_id}`
+- **Method:** PUT
+- **Header:**
+    - Content-Type: application/json
+- **Body: (using product_id = 1)**
+```json
+{
+    "price": 4000 // Update only the price.
+}
+```
+
+**Response**
+- **Status Code:** 200 OK
+- **Body:**
+```json
+{
+    "message": "Product updated succesfully."
+}
+```
+
+## Possible Errors
+**Error - Product not Found to update**
+- **Status Code:** 404 Not Found
+- **Body:**
+```json
+{
+    "message": "Product not found to update."
 }
 ```
