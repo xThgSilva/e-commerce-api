@@ -207,3 +207,108 @@ Update a product. **(Require Authentication)**
     "message": "Product not found to update."
 }
 ```
+
+## Cart
+## 1. POST `/api/cart/add/{product_id}`
+Add a product to the user's cart. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/cart/add/{product_id}`
+- **Method:** POST
+- **Header:**
+    - Content-Type: application/json
+
+**Response**
+- **Status Code:** 200 OK
+- **Body: (Using product_id = 1)**
+```json
+{
+    "message": "Item added to the cart succesfully."
+}
+```
+
+## Possible Errors
+**Error - Failed to add product.**
+- **Status Code:** 400 Bad Request
+- **Body:**
+```json
+{
+    "message": "Failed to add item to the cart."
+}
+```
+
+## 2. GET `/api/cart`
+Returns the products in the user's cart based on their login. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/cart`
+- **Method:** GET
+
+**Response**
+- **Status Code:** 200 OK
+- **Body:**
+```json
+[
+    {
+        "id": 1,
+        "product_id": 1,
+        "user_id": 1
+    }
+]
+```
+
+## 3. DELETE `/api/cart/remove/{product_id}`
+Remove a product from user's cart. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/cart/remove/{product_id}`
+- **Method:** DELETE
+
+**Response**
+- **Status Code:** 200 OK
+- **Body: (using product_id = 1)**
+```json
+{
+    "message": "Item removed from the cart succesfully."
+}
+```
+
+## 4. POST `/api/cart/checkout`
+Complete the cart checkout process. **(Require Authentication)**
+
+**Request**
+- **URL:** `/api/cart/checkout`
+- **Method:** POST
+- **Header:**
+    - Content-Type: application/json
+
+**Response**
+- **Status Code:** 200 OK
+- **Body:**
+```json
+{
+    "message": "Checkout succesfully."
+}
+```
+
+# Requirements
+Dependencies used in this project:
+
+```text
+Flask==2.3.0
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.2
+Flask-Cors==3.0.10
+Werkzeug==2.3.0
+```
+To install all dependencies, run the following command **(Make sure Python and pip are installed on your system.)**:
+```bash
+pip install -r requirements.txt
+```
+
+# Next Features
+- Separate responsibilities (Model, Services, Routes)
+- Connect to the database externally.
+- Improve error handling.
+
+> If you have any questions or suggestions, feel free to open an issue or get in touch.
