@@ -1,5 +1,5 @@
 # E-commerce API
-E-commerce API is a RESTful backend built with Flask that handles user authentication, product management, and shopping cart operations. It provides session-based authentication using Flask-Login and allows users to manage products and simulate a simple e-commerce flow (add to cart and checkout).
+E-commerce API is a RESTful backend built with Flask that handles user authentication, product management, and shopping cart operations. It provides session-based authentication using Flask-Login and allows users to manage products and simulate a simple e-commerce flow (add items to cart and perform checkout).
 <div align="center">
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -17,7 +17,7 @@ E-commerce API is a RESTful backend built with Flask that handles user authentic
 - SQLite
 
 # Authentication Endpoints
-This API uses session-based authentication with Flask-Login. After login, a session cookie is created and automatically sent in requests, which can be obtained from the following route.
+This API uses session-based authentication with Flask-Login. After login, a session cookie is created and automatically sent with each request.
 
 ## 1. Login `/login`
 Generates a cookie for authentication.
@@ -40,7 +40,7 @@ Generates a cookie for authentication.
 - **Body:**
 ```json
 {
-    "message": "Logged in succesfully."
+    "message": "Logged in successfully."
 }
 ```
 
@@ -57,16 +57,16 @@ Ends the user session **(Requires Authentication)**
 - **Status Code:** 200 OK
 ```json
 {
-    "message": "Logout in succesfully."
+    "message": "Logged out successfully."
 }
 ```
 
 # Endpoints
-Below are all the endpoints. Some require authentication.
+Below are all the endpoints. Some endpoints require authentication.
 
 ## Product Endpoints
 ## 1. POST `/api/products/add`
-Add a new product. **(Require Authentication)**
+Add a new product. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/products/add`
@@ -87,12 +87,12 @@ Add a new product. **(Require Authentication)**
 - **Body:**
 ```json
 {
-    "message": "Product added succesfully."
+    "message": "Product added successfully."
 }
 ```
 
 ## 2. GET `/api/products`
-Returns all registered products. **(Require Authentication)**
+Returns all registered products. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/products`
@@ -102,8 +102,7 @@ Returns all registered products. **(Require Authentication)**
 - **Status Code:** 200 OK
 - **Body:**
 ```json
-{
-    [
+[
     {
         "id": 1,
         "name": "TV",
@@ -115,14 +114,13 @@ Returns all registered products. **(Require Authentication)**
         "price": 2500.0
     }
 ]
-}
 ```
 
 ## 3. GET `/api/products/{product_id}`
-Returns the data for a specific product. **(Require Authentication)**
+Returns the data for a specific product. **(Requires Authentication)**
 
 **Request**
-- **URL:** `/api/products//{product_id}`
+- **URL:** `/api/products/{product_id}`
 - **Method:** GET
 
 **Response**
@@ -130,11 +128,9 @@ Returns the data for a specific product. **(Require Authentication)**
 - **Body: (using product_id = 1)**
 ```json
 {
-    {
-        "id": 1,
-        "name": "TV",
-        "price": 4000.0
-    }
+    "id": 1,
+    "name": "TV",
+    "price": 4000.0
 }
 ```
 
@@ -149,7 +145,7 @@ Returns the data for a specific product. **(Require Authentication)**
 ```
 
 ## 4. DELETE `/api/products/delete/{product_id}`
-Delete a product. **(Require Authentication)**
+Delete a product. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/products/delete/{product_id}`
@@ -160,12 +156,12 @@ Delete a product. **(Require Authentication)**
 - **Body: (using product_id = 2)**
 ```json
 {
-    "message": "Product deleted succesfully."
+    "message": "Product deleted successfully."
 }
 ```
 
 ## Possible Errors
-**Error - Product not Found to delete**
+**Error - Product not Found for deletion**
 - **Status Code:** 404 Not Found
 - **Body:**
 ```json
@@ -175,7 +171,7 @@ Delete a product. **(Require Authentication)**
 ```
 
 ## 5. PUT `/api/products/update/{product_id}`
-Update a product. **(Require Authentication)**
+Update a product. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/products/update/{product_id}`
@@ -185,21 +181,22 @@ Update a product. **(Require Authentication)**
 - **Body: (using product_id = 1)**
 ```json
 {
-    "price": 4000 // Update only the price.
+    "price": 4000
 }
 ```
+Updates only the price field
 
 **Response**
 - **Status Code:** 200 OK
 - **Body:**
 ```json
 {
-    "message": "Product updated succesfully."
+    "message": "Product updated successfully."
 }
 ```
 
 ## Possible Errors
-**Error - Product not Found to update**
+**Error - Product not found for update**
 - **Status Code:** 404 Not Found
 - **Body:**
 ```json
@@ -210,7 +207,7 @@ Update a product. **(Require Authentication)**
 
 ## Cart
 ## 1. POST `/api/cart/add/{product_id}`
-Add a product to the user's cart. **(Require Authentication)**
+Add a product to the user's cart. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/cart/add/{product_id}`
@@ -223,7 +220,7 @@ Add a product to the user's cart. **(Require Authentication)**
 - **Body: (Using product_id = 1)**
 ```json
 {
-    "message": "Item added to the cart succesfully."
+    "message": "Item added to the cart successfully."
 }
 ```
 
@@ -238,7 +235,7 @@ Add a product to the user's cart. **(Require Authentication)**
 ```
 
 ## 2. GET `/api/cart`
-Returns the products in the user's cart based on their login. **(Require Authentication)**
+Returns the products in the user's cart based on their login. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/cart`
@@ -258,7 +255,7 @@ Returns the products in the user's cart based on their login. **(Require Authent
 ```
 
 ## 3. DELETE `/api/cart/remove/{product_id}`
-Remove a product from user's cart. **(Require Authentication)**
+Remove a product from user's cart. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/cart/remove/{product_id}`
@@ -269,12 +266,12 @@ Remove a product from user's cart. **(Require Authentication)**
 - **Body: (using product_id = 1)**
 ```json
 {
-    "message": "Item removed from the cart succesfully."
+    "message": "Item removed from the cart successfully."
 }
 ```
 
 ## 4. POST `/api/cart/checkout`
-Complete the cart checkout process. **(Require Authentication)**
+Complete the cart checkout process. **(Requires Authentication)**
 
 **Request**
 - **URL:** `/api/cart/checkout`
@@ -287,7 +284,7 @@ Complete the cart checkout process. **(Require Authentication)**
 - **Body:**
 ```json
 {
-    "message": "Checkout succesfully."
+    "message": "Checkout successfully."
 }
 ```
 
@@ -306,9 +303,9 @@ To install all dependencies, run the following command **(Make sure Python and p
 pip install -r requirements.txt
 ```
 
-# Next Features
+# Future Improvements
 - Separate responsibilities (Model, Services, Routes)
-- Connect to the database externally.
+- Use an external database
 - Improve error handling.
 
 > If you have any questions or suggestions, feel free to open an issue or get in touch.
